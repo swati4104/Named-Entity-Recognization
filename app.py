@@ -15,13 +15,14 @@ st.write("Enter a sentence to extract named entities like PERSON, GPE, ORG, etc.
 # Text input
 text = st.text_area("Enter text:", "Virat Kohli was born in Delhi")
 
+# Button
 if st.button("Analyze"):
     if text.strip() == "":
         st.warning("Please enter some text.")
     else:
         doc = nlp(text)
-
         st.subheader("Extracted Entities")
+
         if doc.ents:
             for ent in doc.ents:
                 st.write(f"**{ent.text}** → {ent.label_}")
