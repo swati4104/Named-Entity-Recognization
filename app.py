@@ -1,22 +1,21 @@
 import streamlit as st
 import spacy
 
+# Load model only once
 @st.cache_resource
 def load_model():
     return spacy.load("en_core_web_sm")
 
 nlp = load_model()
 
-st.title("NER App")
+st.set_page_config(page_title="NER App", layout="centered")
 
-text = st.text_input("Enter text")
+st.title("🔍 Named Entity Recognition (NER)")
+st.write("Enter a sentence and extract named entities.")
 
-if text:
-    doc = nlp(text)
-    for ent in doc.ents:
-        st.write(ent.text, ent.label_)
+text = st.text_area("Enter text:")
 
-if st.button("Analyze"):
+if st.button("Extract Entities"):
     if text.strip() == "":
         st.warning("Please enter some text.")
     else:
@@ -25,6 +24,4 @@ if st.button("Analyze"):
             for ent in doc.ents:
                 st.write(f"**{ent.text}** → {ent.label_}")
         else:
-            st.info("No entities found (model may be blank).")
-
-
+            st.info("No entities found.")
