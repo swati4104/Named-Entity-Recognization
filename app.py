@@ -3,23 +3,21 @@ import spacy
 
 st.set_page_config(page_title="NER App", layout="centered")
 
-# Load model safely (only once)
 @st.cache_resource
-def load_nlp():
+def load_model():
     return spacy.load("en_core_web_sm")
 
-nlp = load_nlp()
+nlp = load_model()
 
-st.title("🔍 Named Entity Recognition (spaCy)")
+st.title("Named Entity Recognition")
 
-text = st.text_area("Enter text:")
+text = st.text_area("Enter text")
 
 if st.button("Extract Entities"):
-    if not text.strip():
-        st.warning("Please enter some text.")
+    if text.strip() == "":
+        st.warning("Please enter some text")
     else:
         doc = nlp(text)
-
         if doc.ents:
             for ent in doc.ents:
                 st.write(f"**{ent.text}** → {ent.label_}")
